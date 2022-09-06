@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+# 'chatterbox.apps.ChatterboxConfig' professional addition, otherwise the name of folder as 'chatterbox' is sufficient
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chatterbox.apps.ChatterboxConfig',
 ]
 
 MIDDLEWARE = [
