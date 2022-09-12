@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main.html' %}
+
+{% block content %}
     <h1>Výsledky hledání</h1>
     <h2>Rooms:</h2>
     <ul>
@@ -18,5 +14,4 @@
             <li>{{ message.body }} --> Author {{ message.user }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}
