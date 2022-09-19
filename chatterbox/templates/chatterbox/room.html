@@ -1,9 +1,41 @@
 {% extends 'main.html' %}
 
+{% block title %}Room: {{ room.name }}{% endblock %}
+
 {% block content %}
-    <h1>Room: {{ room.name }}</h1>
-    <p>{{ room.description }}</p>
+    <div class="room-descr">
+        You are in room: <b>{{ room.name }}</b> <br>
+        Description: {{ room.description }}
+    </div>
+
+    <div class="message-form">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="body">Message: </label>
+            <textarea name="body" id="body" rows="1" cols="100"> </textarea>
+            <input type="submit" value="Send">
+        </form>
+    </div>
+
+    <div class="messages-box">
     {% for message in messages %}
-        <p><b>{{ message.user }}:</b> {{ message.body }} </p>
+        {% if message.user == request.user %}
+            <div class="my-message">
+                <div class="my-message-info">
+                    <span class="message-user">{{ message.user }}</span>
+                    <span class="message-time">{{ message.created }}</span>
+                </div>
+                <div class="my-message-body">{{ message.body }}</div>
+            </div>
+        {% else %}
+            <div class="other-message">
+                <div class="other-message-info">
+                    <span class="message-user">{{ message.user }}</span>
+                    <span class="message-time">{{ message.created }}</span>
+                </div>
+                <div class="other-message-body">{{ message.body }}</div>
+            </div>
+        {% endif %}
     {% endfor %}
+    </div>
 {% endblock %}
