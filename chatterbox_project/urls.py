@@ -30,6 +30,9 @@ urlpatterns = [
     path('rooms/', chatterbox.views.rooms, name='rooms'),
     path('create_room/', chatterbox.views.create_room, name="create_room"),
     # path('create_room/new_room/', chatterbox.views.new_room, name="new_room"),
+    path('delete_room/<str:pk>', chatterbox.views.delete_room, name="delete_room"),
+    path('edit_room/<str:pk>/', chatterbox.views.EditRoom.as_view(), name="edit_room"),  # key can be just <pk>
+
     # accounts application
     path("accounts/", include("accounts.urls")),  # signup
     path("accounts/", include("django.contrib.auth.urls")),  # login, logout, password_change...
