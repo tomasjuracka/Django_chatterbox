@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
 from django.forms import ModelForm
 # from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
@@ -22,12 +23,29 @@ def home(request):
 
 
 @login_required
-def search(request, s):
-    rooms = Room.objects.filter(name__contains=s)
-    messages = Message.objects.filter(body__contains=s)
+def search(request):
+    if request.method == 'POST':
+        s = request.POST.get('search')
+        s = s.strip()
+        if len(s) > 0:
+            rooms = Room.objects.filter(name__contains=s)
+            messages = Message.objects.filter(body__contains=s)
 
-    context = {'rooms': rooms, 'messages': messages}
-    return render(request, "chatterbox/search.html", context)
+            context = {'rooms': rooms, 'messages': messages, 'search': s}
+            return render(request, "chatterbox/search.html", context)
+        return redirect('home')
+
+    # context = {'rooms': None, 'messages': None}
+    return redirect('home')
+
+
+# @login_required
+# def search(request, s):
+#     rooms = Room.objects.filter(name__contains=s)
+#     messages = Message.objects.filter(body__contains=s)
+#
+#     context = {'rooms': rooms, 'messages': messages}
+#     return render(request, "chatterbox/search.html", context)
 
 
 @login_required
@@ -37,17 +55,43 @@ def room(request, pk):
 
     # we have to process every new message
     if request.method == 'POST':
+        file_url = ""
+        if request.FILES.get('upload'):
+            upload = request.FILES['upload']
+            file_storage = FileSystemStorage()
+            file = file_storage.save(upload.name, upload)
+            file_url = file_storage.url(file)
         body = request.POST.get('body').strip()
-        if len(body) > 0:
+        if len(body) > 0 or request.FILES.get('upload'):
             message = Message.objects.create(
                 user=request.user,
                 room=room,
                 body=body,
+                file=file_url
             )
         return HttpResponseRedirect(request.path_info)
 
     context = {'room': room, 'messages': messages}
     return render(request, "chatterbox/room.html", context)
+
+
+@login_required
+def delete_room(request, pk):
+    room = Room.objects.get(id=pk)
+    if room.messages_count() == 0:
+        room.delete()
+
+        return redirect('rooms')
+
+    context = {'room': room, 'message_count': room.messages_count()}
+    return render(request, 'chatterbox/delete_room.html', context)
+
+
+@login_required
+def delete_room_yes(request, pk):
+    room = Room.objects.get(id=pk)
+    room.delete()
+    return redirect('rooms')
 
 
 @login_required
@@ -74,13 +118,13 @@ def create_room(request):
 
     return render(request, 'chatterbox/create_room.html')
 
-
-@login_required
-def delete_room(request, pk):
-    room = Room.objects.get(id=pk)
-    room.delete()
-
-    return redirect('rooms')
+# Old room delete that purged room along with its content
+# @login_required
+# def delete_room(request, pk):
+#     room = Room.objects.get(id=pk)
+#     room.delete()
+#
+#     return redirect('rooms')
 
 
 # form

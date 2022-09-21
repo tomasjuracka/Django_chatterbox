@@ -22,6 +22,23 @@ nav li {
     padding: 10px;
 }
 
+/* css for search */
+#search {
+   position: absolute;
+   top: 10px;
+   right: 28px;
+   height: 50px;
+   line-height: 50px;
+}
+
+#search input.text {
+   padding: 10px 40px 10px 10px;
+   background: rgba(222, 231, 250, 1) url(/static/chatterbox/search.png) top right no-repeat;
+   color: black;
+   width: 200px;
+   border: solid 1px #3c3c3c;
+}
+
 /* home.html */
 .user_hello {
     font-size: 32px;
@@ -30,6 +47,22 @@ nav li {
 
 .welcome {
     font-size: 32px;
+}
+
+.my-message-file {
+    width: 50px;
+    border: solid 2px #b81a51;
+    margin-top: -30px;
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+.other-message-file {
+    width: 50px;
+    border: solid 2px #4432a8;
+    margin-top: -20px;
+    margin-left: 10px;
+    margin-right: auto;
 }
 
 /* rooms.html */
