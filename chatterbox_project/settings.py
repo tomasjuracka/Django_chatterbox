@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Added when developing the project
     'chatterbox.apps.ChatterboxConfig',
     'accounts',
+    'profiles',
 ]
 
 MIDDLEWARE = [

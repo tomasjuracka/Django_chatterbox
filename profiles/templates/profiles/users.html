@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+
+<div class="list_of_users">List of users: </div>
+    <ul>
+        {% for profile in profiles %}
+            <li>
+                <a href="{% url 'profile' profile.id %}">{{ profile.user.username }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

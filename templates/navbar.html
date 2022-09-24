@@ -5,7 +5,8 @@
         {% if request.user.is_authenticated %}
             <li><a href="{% url 'create_room' %}">Create room</a></li>
             <li><a href="{% url 'rooms' %}">Rooms</a></li>
-        <li class="last-item">User: <i>{{ request.user.username }} </i><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'profiles' %}">Users</a></li> <!-- ToDo: template -->
+            <li class="last-item">User: <i>{{ request.user.username }} </i><a href="{% url 'logout' %}">Logout</a></li>
         {% endif %}
         {% if not request.user.is_authenticated %}
             <li class="last-item"><a href="{% url 'login' %}">Login/Signup</a></li>
