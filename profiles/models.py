@@ -9,7 +9,7 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userprofile")
     about_me = models.TextField(null=True)
     photo = models.TextField(null=True)
     last_seen = models.DateTimeField(auto_now=True)

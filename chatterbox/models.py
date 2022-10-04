@@ -12,7 +12,7 @@ class Room(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-updated', '-created']
+        ordering = ['-updated', '-created']  # sign - will reverse the search and shows the newest, not the oldest
 
     def __str__(self):
         return self.name
@@ -35,7 +35,7 @@ class Message(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-updated', '-created']
+        ordering = ['-updated', '-created']  # sign - will reverse the search and shows the newest, not the oldest
 
     def __str__(self):
         return self.body[0:50]

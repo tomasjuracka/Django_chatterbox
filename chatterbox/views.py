@@ -28,24 +28,33 @@ def search(request):
         s = request.POST.get('search')
         s = s.strip()
         if len(s) > 0:
-            rooms = Room.objects.filter(name__contains=s)
-            messages = Message.objects.filter(body__contains=s)
+            rooms = Room.objects.filter (name__contains=s)
+            messages = Message.objects.filter (body__contains=s)
 
             context = {'rooms': rooms, 'messages': messages, 'search': s}
-            return render(request, "chatterbox/search.html", context)
-        return redirect('home')
-
-    # context = {'rooms': None, 'messages': None}
+            return render(request, 'chatterbox/search.html', context)
+        else:
+            context = {'rooms': None, 'messages': None}
+            # return redirect ('home')
     return redirect('home')
 
 
 # @login_required
-# def search(request, s):
-#     rooms = Room.objects.filter(name__contains=s)
-#     messages = Message.objects.filter(body__contains=s)
-#
-#     context = {'rooms': rooms, 'messages': messages}
-#     return render(request, "chatterbox/search.html", context)
+"""
+def search(request,s):
+    rooms = Room.objects.filter(name__contains=s)
+    response = "Rooms: "
+    for room in rooms:
+        response += room.name + ", "
+    return HttpResponse(rooms)
+
+    messages = Message.objects.filter(body__contains=s)
+    response += "<br>Messages: "
+    for message in messages:
+        response += message.body[0:10] + " ... , "
+
+    return render(request, "chatterbox/search.html", context)
+"""
 
 
 @login_required
